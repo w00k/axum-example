@@ -1,20 +1,10 @@
 use axum::{extract::{State, Path}, routing::{get, post}, Json, Router, http::StatusCode};
 use sqlx::PgPool;
-use serde::{Deserialize, Serialize};
+
 use dotenvy::dotenv;
 
-#[derive(Serialize, Deserialize, sqlx::FromRow)]
-struct Dino {
-    id: i32,
-    nombre: String,
-    especie: String,
-}
-
-#[derive(Deserialize)]
-struct CreateDino {
-    nombre: String,
-    especie: String,
-}
+mod domain;
+use crate::domain::{create_dino::CreateDino, dino::Dino};
 
 // Handler para obtener un dinosaurio
 async fn get_dino(
